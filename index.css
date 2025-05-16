@@ -1,0 +1,165 @@
+/*
+
+import React, { Component } from "react";
+import * as XLSX from "xlsx";
+
+class Apps extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [
+        { id: 1, Name: "", Age:"", City: "" },
+        { id: 2, Name: "", Age:"", City: "" },
+        { id: 3, Name: "", Age:"", City: "" },
+        { id: 4, Name: "", Age:"", City: "" },
+        { id: 5, Name: "", Age:"", City: "" },
+      ],
+      role: "admin", // Can be "admin" or numeric user id
+      newColumn: "",
+    };
+  }
+
+  handleFieldChange = (rowIndex, field, value) => {
+    const updated = [...this.state.data];
+    updated[rowIndex][field] = value;
+    this.setState({ data: updated });
+  };
+
+  isEditable = (field) => {
+    return field !== "id";
+  };
+
+  handleExport = () => {
+    const { data } = this.state;
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    const buffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+    const blob = new Blob([buffer], { type: "application/octet-stream" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "assigned_data.xlsx");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  handleRoleChange = (e) => {
+    this.setState({ role: e.target.value });
+  };
+
+  handleAddColumn = () => {
+    const { newColumn, data } = this.state;
+    if (!newColumn) return;
+    const updated = data.map((row) => ({ ...row, [newColumn]: "" }));
+    this.setState({ data: updated, newColumn: "" });
+  };
+
+  handleDeleteColumn = (field) => {
+    if (field === "id") return;
+    const updated = this.state.data.map((row) => {
+      const newRow = { ...row };
+      delete newRow[field];
+      return newRow;
+    });
+    this.setState({ data: updated });
+  };
+
+  render() {
+    const { data, role, newColumn } = this.state;
+    const headers = Object.keys(data[0]);
+
+    const filteredData = role === "admin"
+      ? data
+      : data.filter((row) => row.id.toString() === role);
+
+    return (
+      <div style={{ padding: 20 }}>
+        <h2>Collaborative Excel-like Editor</h2>
+
+        <label>Select Role:&nbsp;</label>
+        <select value={role} onChange={this.handleRoleChange}>
+          <option value="admin">Admin</option>
+          {data.map((user) => (
+            <option key={user.id} value={user.id.toString()}>
+              User {user.id}
+            </option>
+          ))}
+        </select>
+
+        <br />
+        <br />
+
+        <table border="1" cellPadding="10" style={{ borderCollapse: "collapse" }}>
+          <thead>
+            <tr>
+              {headers.map((field) => (
+                <th key={field}>
+                  {field}
+                  {role === "admin" && field !== "id" && (
+                    <>
+                      <br />
+                      <button onClick={() => this.handleDeleteColumn(field)}>
+                        Delete
+                      </button>
+                    </>
+                  )}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {filteredData.map((row, rowIndex) => (
+              <tr key={row.id}>
+                {headers.map((field) => (
+                  <td key={field}>
+                    {this.isEditable(field) ? (
+                      <input
+                        type="text"
+                        value={row[field]}
+                        onChange={(e) =>
+                          this.handleFieldChange(
+                            this.state.data.findIndex((r) => r.id === row.id),
+                            field,
+                            e.target.value
+                          )
+                        }
+                      />
+                    ) : (
+                      row[field]
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <br />
+        {role === "admin" && (
+          <>
+            <div style={{ marginBottom: 10 }}>
+              <input
+                type="text"
+                placeholder="New Column Name"
+                value={newColumn}
+                onChange={(e) => this.setState({ newColumn: e.target.value })}
+              />
+              <button onClick={this.handleAddColumn}>Add Column</button>
+            </div>
+
+            <button onClick={this.handleExport} style={{ padding: "10px 20px" }}>
+              Export to Excel
+            </button>
+          </>
+        )}
+      </div>
+    );
+  }
+}
+
+export default Apps;
+
+
+*/
